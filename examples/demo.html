@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Title -->
+    <title>Flex Gallery</title>
+
+    <!-- Using jQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
+    <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Imports flex-gallery sources -->
+    <script type="text/javascript" src="../src/js/flex-gallery.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/css/flex-gallery.css">
+
+    <!-- Imports other javascript sources -->
+    <script type="text/javascript" src="../src/js/media-list.js"></script>
+</head>
+<body style="margin: 0;">
+
+    <!-- Image container -->
+    <div id="container"></div>
+
+    <script type="text/javascript">
+        $('#container').addFlexImages(media_list, true).flexGallery();
+    </script>
+</body>
+</html>
