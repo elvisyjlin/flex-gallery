@@ -89,7 +89,7 @@ Don't forget calling `flexGallery()` to make the container *flex* at the end.
 $('#container').flexGallery();
 ```
 
-Moreover, parameters are accept by `flexGallery()`.
+Moreover, custom parameters are accepted by `flexGallery()`. It is easy to arrange the layout of Flex Gallery.
 ```javascript
 $('#container').flexGallery({
     margin: '0.5vmin', 
@@ -99,7 +99,7 @@ $('#container').flexGallery({
 });
 ```
 
-Note that `margin` can be either absolute (`px`) or relative (`vw`, `vh`, `vmin`) unit, 
+Note that `margin` can be either absolute (`px`, `em`) or relative (`vw`, `vh`, `vmin`) unit, 
 while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
 
 ## How it works?
