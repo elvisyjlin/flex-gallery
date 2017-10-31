@@ -1,6 +1,8 @@
 # Flex Gallery
 
-![Demo](examples/readme-img.png "Demo")
+Demo: https://elvisyjlin.github.io/flex-gallery/examples/demo.html
+
+[![Demo](examples/readme-img.png "Demo")](https://elvisyjlin.github.io/flex-gallery/examples/demo.html)
 
 Flex Gallery is a flexible responsive justified image gallery with CSS and jQuery.
 
