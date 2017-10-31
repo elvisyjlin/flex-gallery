@@ -12,7 +12,7 @@
          * Default options for the flex gallery.
          */
         var settings = $.extend({
-            margin: '0.2%',
+            margin: '0.5vmin',
             minHeight: 1,
             fadeInDuration: 1000,
             checkPeriod: 100

@@ -89,6 +89,19 @@ Don't forget calling `flexGallery()` to make the container *flex* at the end.
 $('#container').flexGallery();
 ```
 
+Moreover, parameters are accept by `flexGallery()`.
+```javascript
+$('#container').flexGallery({
+    margin: '0.5vmin', 
+    minHeightRatio: 0.25, 
+    fadeInDuration: 1000, 
+    checkPeriod: 100
+});
+```
+
+Note that `margin` can be either absolute (`px`) or relative (`vw`, `vh`, `vmin`) unit, 
+while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
+
 ## How it works?
 
 ##### Flexible Box Layout
@@ -133,7 +146,7 @@ and allocate spaces for images in advance. Each image will be displayed when loa
 ## Supported Browser
 
 Most popular browsers would support Flex Gallery, such as Chrome, Firefox, Safari, Edge, Opera, and so on.  
-However, IE 10 or below does not support the flexible box layout and naturalWidth&naturalHeight image properties.
+However, IE 10 or below does not support the flexible box layout, vmin property, and naturalWidth&naturalHeight image properties.
 
 ## TODO
 

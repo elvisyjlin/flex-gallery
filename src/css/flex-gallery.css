@@ -15,11 +15,11 @@
     /**
      * Eliminates paddings images below images.
      */
-    display: block;
+    /*display: block;*/
     /**
      * Equivalent to "display: block;"
      */
-    /*vertical-align: bottom;*/
+    vertical-align: middle;
 }
 .flex-gallery-container {
     /**

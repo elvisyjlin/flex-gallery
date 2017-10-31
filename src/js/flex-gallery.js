@@ -12,16 +12,15 @@
          * Default options for the flex gallery.
          */
         var settings = $.extend({
-            margin: '0.2%',
-            minHeight: 1,
+            margin: '0.5vmin',
+            minHeightRatio: 0.25,
             fadeInDuration: 1000,
             checkPeriod: 100
         }, options);
         /**
          * Calculates the minimum height of each row.
          */
-        var minHeight = screen.height * 0.25 * settings.minHeight;
-        // var minHeight = screen.height / 4 * Math.tanh(screen.width / screen.height) * settings.minHeight / 200;
+        var minHeight = screen.height * settings.minHeightRatio;
         /**
          * Make all elements flex.
          */
