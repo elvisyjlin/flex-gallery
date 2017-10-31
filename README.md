@@ -104,7 +104,7 @@ while percentage (`%`) padding or margin in flex element is not supported by som
 
 ## How it works?
 
-##### Flexible Box Layout
+#### Flexible Box Layout
 
 The main idea is to let images grow (or extend) by flexible box layout algorithm.
 
@@ -123,11 +123,11 @@ So the images in a row can grow to the same height if their `flex-grow` are assi
 
 Other modifications are done to deal with detailed problems.
 
-##### addFlexImages()
+#### addFlexImages()
 
 `addFlexImages()` iterates through the given array and create `<a>` and `<img>` according to the URLs in it.
 
-##### flexGallery()
+#### flexGallery()
 
 `flexGallery()` assigned flex-gallery classes for `<div>`, `<a>`, and `<img>` of a Flex Gallery. 
 Also, it configures the style of the gallery with input arguments, 
@@ -135,7 +135,7 @@ especially the fade-in effect for postponed displayed. Moreover,
 the image size pre-calculating is also performed in it. To be exact, 
 `setTimeInterval()` is used to check the sizes periodically.
 
-##### Why not simply wrap an image in a `<img>`?
+#### Why not simply wrap an image in a `<img>`?
 
 An outer element of `<img>`, here we use a `<a>`, helps occupy the space for the image before it is fully loaded.
 Without the outer element, the view will flicker during the time it loads images.
