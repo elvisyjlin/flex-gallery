@@ -91,6 +91,7 @@ $('#container').flexGallery();
 
 Moreover, custom parameters are accepted by `flexGallery()`. It is easy to arrange the layout of Flex Gallery.
 ```javascript
+/* These are default values for flexGallery() */
 $('#container').flexGallery({
     margin: '0.5vmin', 
     minHeightRatio: 0.25, 
@@ -98,6 +99,14 @@ $('#container').flexGallery({
     checkPeriod: 100
 });
 ```
+
+##### Parameter Values
+Parameter         | Description
+:---------------- | :----------------
+*margin*          | An string in CSS style specifies the width of half margin. E.g. '1vmin' or '2vh'.
+*minHeightRatio*  | An float that specifies the min-height ratio of screen height for each row.
+*fadeInDuration*  | An integer that specifies the fade-in time of an images after it is loaded.
+*checkPeriod*     | An integer that specifies the period of checking the size of each image.
 
 Note that `margin` can be either absolute (`px`, `em`) or relative (`vw`, `vh`, `vmin`) unit, 
 while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
