@@ -29,7 +29,7 @@
                 .css('margin', settings.margin)
                 .children("a")  .addClass("flex-gallery-a")
                                 .css('margin', settings.margin)
-                                .each(function() {
+                                .each((index, element) => {
                                     /**
                                      * Checks sizes of every images being loading
                                      * so that we are able to set up the sizes of <a>s in advance.
@@ -38,10 +38,10 @@
                                      * However, naturalWidth and naturalHeight do not work in IE8 or below
                                      */
                                     var poll = setInterval(() => {
-                                        var img = $(this).children()[0];
+                                        var img = $(element).children()[0];
                                         if (img.naturalWidth) {
                                             clearInterval(poll);
-                                            $(this).css({
+                                            $(element).css({
                                                 'width': minHeight * img.naturalWidth / img.naturalHeight, 
                                                 'flex-grow': img.naturalWidth / img.naturalHeight
                                             });
@@ -50,11 +50,11 @@
                                 })
                 .children("img").addClass("flex-gallery-img")
                                 .css("display", "none")
-                                .on('load', function() {
+                                .on('load', (event) => {
                                     /**
                                      * Let each image invisible first and then fade in an image when it is loaded completely.
                                      */
-                                    $(this).fadeIn(settings.fadeInDuration)
+                                    $(event.target).fadeIn(settings.fadeInDuration);
                                 });
         });
     };
@@ -105,7 +105,7 @@ function shuffle(array) {
 }
 
 /**
- * Adds click function on document for debugging.
+ * Adds a click function on document for debugging.
  */
 $(document).on('click', (e) => {
     // $("img").css({'--natural-size-ratio': '100px'});

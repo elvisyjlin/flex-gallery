@@ -160,11 +160,11 @@ However, IE 10 or below does not support the flexible box layout, vmin property,
 ## TODO
 
 What I am planning to do in the future:  
-1. To make Flex Gallery responsive when the window is resized.
-2. To allow Flex Gallery accept thumbnails as well as original images. 
-3. To create a customizable min-height for developers to utilize.
-4. To implement lazy loading when dealing with a large amount of images.
-5. To implement popup box with a caption after a image is clicked.
+- [ ] To make Flex Gallery responsive when the window is resized.
+- [ ] To allow Flex Gallery accept thumbnails as well as original images. 
+- [ ] To create a customizable min-height for developers to utilize.
+- [ ] To implement lazy loading when dealing with a large amount of images.
+- [ ] To implement popup box with a caption after a image is clicked.
 
 ## Reference
 
