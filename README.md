@@ -33,7 +33,7 @@ Flex Gallery only needs jQuery. You can either include it locally or from a CDN.
 <!-- Include jQuery locally -->
 <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
 <!-- Include jQuery from a CDN -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 ```
 
 Then include Flex Gallery's javascript source and css style sheet.
