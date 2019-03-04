@@ -11,7 +11,7 @@
         /**
          * Default options for the flex gallery.
          */
-        var settings = $.extend({
+        let settings = $.extend({
             margin: '0.5vmin',
             minHeightRatio: 0.25,
             fadeInDuration: 1000,
@@ -20,7 +20,7 @@
         /**
          * Calculates the minimum height of each row.
          */
-        var minHeight = screen.height * settings.minHeightRatio;
+        let minHeight = screen.height * settings.minHeightRatio;
         /**
          * Make all elements flex.
          */
@@ -37,8 +37,8 @@
                                      * 
                                      * However, naturalWidth and naturalHeight do not work in IE8 or below
                                      */
-                                    var poll = setInterval(() => {
-                                        var img = $(element).children()[0];
+                                    let poll = setInterval(() => {
+                                        let img = $(element).children()[0];
                                         if (img.naturalWidth) {
                                             clearInterval(poll);
                                             $(element).css({
@@ -98,8 +98,8 @@
  * @return {None}
  */
 function shuffle(array) {
-    for(var i in array) {
-        var j = Math.floor(Math.random() * array.length);
+    for(let i in array) {
+        let j = Math.floor(Math.random() * array.length);
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
