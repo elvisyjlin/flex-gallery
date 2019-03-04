@@ -1,4 +1,8 @@
 /**
+ * Global variables.
+ */
+var autoAdjusted = false;
+/**
  * Customizes jQuery functions.
  */
 ($ => {
@@ -13,14 +17,41 @@
          */
         let settings = $.extend({
             margin: '0.5vmin',
-            minHeightRatio: 0.25,
+            minHeightRatioWindow: null,
+            minHeightRatioScreen: null,
             fadeInDuration: 1000,
-            checkPeriod: 100
+            checkPeriod: 100, 
+            autoAdjust: true
         }, options);
         /**
          * Calculates the minimum height of each row.
+         *
+         * If no ratios are defined, it takes 0.25 window height in default.
+         * If both ratios are defined, the smaller computed height will be applied.
          */
-        let minHeight = screen.height * settings.minHeightRatio;
+        if(!settings.minHeightRatioWindow && !settings.minHeightRatioScreen)
+            settings.minHeightRatioWindow = 0.25;
+        let minHeightWindow = minHeightScreen = Number.MAX_SAFE_INTEGER;
+        if(settings.minHeightRatioWindow)
+            minHeightWindow = window.innerHeight * settings.minHeightRatioWindow;
+        if(settings.minHeightRatioScreen)
+            minHeightScreen = screen.height * settings.minHeightRatioScreen;
+        let minHeight = Math.min(minHeightWindow, minHeightScreen);
+        /**
+         * Listen on window size change.
+         */
+        if(!autoAdjusted && settings.autoAdjust) {
+                $(window).on('resize', () => {
+                    if(settings.minHeightRatioWindow)
+                        minHeightWindow = window.innerHeight * settings.minHeightRatioWindow;
+                    minHeight = Math.min(minHeightWindow, minHeightScreen);
+                    $('.flex-gallery-a').each((index, element) => {
+                        let img = $(element).children()[0];
+                        $(element).css('width', minHeight * img.naturalWidth / img.naturalHeight);
+                    });
+                });
+                autoAdjusted = true;
+        }
         /**
          * Make all elements flex.
          */

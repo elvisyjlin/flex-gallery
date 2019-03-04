@@ -94,19 +94,24 @@ Moreover, custom parameters are accepted by `flexGallery()`. It is easy to arran
 /* These are default values for flexGallery() */
 $('#container').flexGallery({
     margin: '0.5vmin', 
-    minHeightRatio: 0.25, 
+    minHeightRatioWindow: 0.25, 
     fadeInDuration: 1000, 
     checkPeriod: 100
 });
 ```
 
 ##### Parameter Values
-Parameter         | Description
-:---------------- | :----------------
-*margin*          | An string in CSS style specifies the width of half margin. E.g. '1vmin' or '2vh'.
-*minHeightRatio*  | An float that specifies the min-height ratio of screen height for each row.
-*fadeInDuration*  | An integer that specifies the fade-in time of an images after it is loaded.
-*checkPeriod*     | An integer that specifies the period of checking the size of each image.
+
+Parameter               | Description
+:---------------------- | :----------------------
+*margin*                | An string in CSS style specifies the width of half margin. E.g. '1vmin' or '2vh'.
+*minHeightRatioWindow*  | An float that specifies the min-height ratio of browser window height for each row.
+*minHeightRatioScreen*  | An float that specifies the min-height ratio of screen height for each row.
+*fadeInDuration*        | An integer that specifies the fade-in time of an images after it is loaded.
+*checkPeriod*           | An integer that specifies the period of checking the size of each image.
+
+If neither *minHeightRatioWindow* nor *minHeightRatioScreen* is specified, it will take 0.25 browser windo height in default. 
+If both of them are specified, the smaller computed height will be applied to the page.
 
 Note that `margin` can be either absolute (`px`, `em`) or relative (`vw`, `vh`, `vmin`) unit, 
 while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
@@ -160,7 +165,7 @@ However, IE 10 or below does not support the flexible box layout, vmin property,
 ## TODO
 
 What I am planning to do in the future:  
-- [ ] To make Flex Gallery responsive when the window is resized.
+- [x] To make Flex Gallery responsive when the window is resized.
 - [ ] To allow Flex Gallery accept thumbnails as well as original images. 
 - [ ] To create a customizable min-height for developers to utilize.
 - [ ] To implement lazy loading when dealing with a large amount of images.
