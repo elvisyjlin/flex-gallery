@@ -2,7 +2,7 @@
 
 Demo: https://elvisyjlin.github.io/flex-gallery/examples/demo.html
 
-[![Demo](examples/readme-img.png "Demo")](https://elvisyjlin.github.io/flex-gallery/examples/demo.html)
+[![Demo](examples/readme_img_t.png "Demo")](https://elvisyjlin.github.io/flex-gallery/examples/demo.html)
 
 Flex Gallery is a flexible responsive justified image gallery with CSS and jQuery.
 
@@ -52,20 +52,23 @@ An ID helps access and modify the element later. For example, I created a `<div>
 
 ### To Call
 
-Flex Gallery accepts a list of images.  
+Flex Gallery accepts an object, called as *media*, containing a list of images and a list of links.  
 Simply set images in a container by `addFlexImages()` and call `flexGallery()` to make it *flex*.
 ```javascript
-$('#container').addFlexImages(image_list).flexGallery();
+$('#container').addFlexImages(media).flexGallery();
 ```
 
-An image list would look like this. It is an array containing all images you want to display.
+*media* looks like this. It is an object containing images you want to display and corresponding links.
 ```javascript
-image_list = ['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg'];
+media = {
+    images: ['img/image1_t.jpg', 'img/image2_t.jpg', 'img/image3_t.jpg'],
+    links: ['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg']
+}
 ```
 
 If you want the images displayed in a random order, set shuffling to true.
 ```javascript
-$('#container').addFlexImages(image_list, shuffling=true).flexGallery();
+$('#container').addFlexImages(media, shuffling=true).flexGallery();
 ```
 
 ### To Customize
@@ -75,10 +78,10 @@ A container is supposed to be structured as shown below.
 ```html
 <div id="container">
     <a href="img/image1.jpg">
-        <img src="img/image1.jpg">
+        <img src="img/image1_t.jpg">
     </a>
     <a href="img/image2.jpg">
-        <img src="img/image2.jpg">
+        <img src="img/image2_t.jpg">
     </a>
     <!-- more images -->
 </div>
@@ -100,7 +103,7 @@ $('#container').flexGallery({
 });
 ```
 
-##### Parameter Values
+##### Optional Parameters
 
 Parameter               | Description
 :---------------------- | :----------------------
@@ -166,7 +169,7 @@ However, IE 10 or below does not support the flexible box layout, vmin property,
 
 What I am planning to do in the future:  
 - [x] To make Flex Gallery responsive when the window is resized.
-- [ ] To allow Flex Gallery accept thumbnails as well as original images. 
+- [x] To allow Flex Gallery accept thumbnails as well as original images. 
 - [ ] To create a customizable min-height for developers to utilize.
 - [ ] To implement lazy loading when dealing with a large amount of images.
 - [ ] To implement popup box with a caption after a image is clicked.

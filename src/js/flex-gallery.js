@@ -91,30 +91,42 @@ var autoAdjusted = false;
     };
     /**
      * Sets up the needed methods for an flex-gallery-image.
-     * @param {Array} imgs - the image list to be displayed
+     * @param {Object} media - an object of images and links
      * @param {Boolean} shuffling - whether to shuffle the image list or not
      * @return {jQuery}
+     *
+     * In `media`, `images` is required while `links` not. They are both Arrays.
+     * The hyperlink will be set as the image url if `links` is not given.
      */
-    $.fn.addFlexImages = function(imgs, shuffling=false) {
+    $.fn.addFlexImages = function(media, shuffling=false) {
+        if(!media.images)
+            throw "Error: images not found.";
+        if(media.links && media.images.length != media.links.length)
+            throw "Error: # of images and # of links are not the same.";
         /**
          * Clones the image array.
          */
-        imgs = imgs.slice();
+        let images = links = media.images.slice();
+        if(media.links)
+            links = media.links.slice();
+        /**
+         * Add images to the page.
+         */
         return this.each(() => {
             /**
-             * Shuffles the images if shuffling is true.
+             * Get a randomly permutated indices.
              */
-            if(shuffling) { shuffle(imgs); }
+            let indices = randPerm(media.images.length);
             /**
              * Puts images into the #container.
              */
-            imgs.forEach((element) => {
+            indices.forEach((index) => {
                 /**
                  * Creates and inserts <a> with <img> in the container.
                  */
                 $("#container").append(
-                    $("<a>").attr("href", element).append(
-                        $("<img>").attr("src", element) //** this image should be a thumbnail
+                    $("<a>").attr("href", links[index]).append(
+                        $("<img>").attr("src", images[index]) //** this image should be a thumbnail
                     )
                 );
             });
@@ -124,7 +136,7 @@ var autoAdjusted = false;
 
 /**
  * Swaps elements in an array randomly.
- * The contents are reordered directly.
+ * The contents are reordered in place.
  * @param {Array} array - the array to be shuffled
  * @return {None}
  */
@@ -133,6 +145,17 @@ function shuffle(array) {
         let j = Math.floor(Math.random() * array.length);
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+/**
+ * Randomly permutate a list of indices.
+ * @param {Number} length - the number of indices
+ * @return {Array} an randomly permutated array
+ */
+function randPerm(length) {
+    let array = Array.from({length: length}, (v, k) => k);
+    shuffle(array)
+    return array
 }
 
 /**
