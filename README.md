@@ -24,6 +24,7 @@ utilizing the effectiveness and efficiency of the flexible box layout.
 * **Easy to load:** either the size of sources or computation time is pretty lightweight.
 * **Easy to integrate:** no requirement for server side programming.
 
+
 ## How to use it?
 
 ### To Include
@@ -119,6 +120,7 @@ If both of them are specified, the smaller computed height will be applied to th
 Note that `margin` can be either absolute (`px`, `em`) or relative (`vw`, `vh`, `vmin`) unit, 
 while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
 
+
 ## How it works?
 
 #### Flexible Box Layout
@@ -160,10 +162,12 @@ And the layout would not be consistent because images come in asynchronously.
 Therefore, I choose to set all images invisible first, read sizes, using `naturalWidth` and `naturalHeight`, 
 and allocate spaces for images in advance. Each image will be displayed when loading completed.
 
+
 ## Supported Browser
 
 Most popular browsers would support Flex Gallery, such as Chrome, Firefox, Safari, Edge, Opera, and so on.  
 However, IE 10 or below does not support the flexible box layout, vmin property, and naturalWidth&naturalHeight image properties.
+
 
 ## TODO
 
@@ -173,6 +177,9 @@ What I am planning to do in the future:
 - [ ] To create a customizable min-height for developers to utilize.
 - [ ] To implement lazy loading when dealing with a large amount of images.
 - [ ] To implement popup box with a caption after a image is clicked.
+- [ ] To add a title and a description for each flex image.
+- [ ] Fly in images with animations beyond fading.
+
 
 ## Reference
 
