@@ -1,7 +1,15 @@
+#!/usr/bin/python
+
+###
+# A tool to generate thumbnails for images in a folder.
+# E.g. the thumbnail of `im01.jpg` is named as `im01_t.jpg`
+###
+
 import argparse
 import os
 from glob import glob
 from PIL import Image
+
 
 IMG_EXTS = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
 
