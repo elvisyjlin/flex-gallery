@@ -29,12 +29,14 @@ utilizing the effectiveness and efficiency of the flexible box layout.
 
 ### To Include
 
-Flex Gallery only needs jQuery. You can either include it locally or from a CDN.
+Flex Gallery needs _jQuery_ and _Dynamics.js_.
 ```html
 <!-- Include jQuery locally -->
 <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
 <!-- Include jQuery from a CDN -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Include Dynamics.js locally -->
+<script type="text/javascript" src="../src/js/dynamics.min.js"></script>
 ```
 
 Then include Flex Gallery's javascript source and css style sheet.
@@ -80,9 +82,11 @@ A container is supposed to be structured as shown below.
 <div id="container">
     <a href="img/image1.jpg">
         <img src="img/image1_t.jpg">
+        <span>description 1</span>
     </a>
     <a href="img/image2.jpg">
         <img src="img/image2_t.jpg">
+        <span>description 2</span>
     </a>
     <!-- more images -->
 </div>
@@ -177,7 +181,7 @@ What I am planning to do in the future:
 - [ ] To create a customizable min-height for developers to utilize.
 - [ ] To implement lazy loading when dealing with a large amount of images.
 - [ ] To implement popup box with a caption after a image is clicked.
-- [ ] To add a title and a description for each flex image.
+- [x] To add a description for each flex image.
 - [ ] Fly in images with animations beyond fading.
 
 

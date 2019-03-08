@@ -58,39 +58,60 @@ var autoAdjusted = false;
         return this.each(() => {
             this.addClass("flex-gallery-container")
                 .css('margin', settings.margin)
-                .children("a")  .addClass("flex-gallery-a")
-                                .css('margin', settings.margin)
-                                .each((index, element) => {
-                                    /**
-                                     * Checks sizes of every images being loading
-                                     * so that we are able to set up the sizes of <a>s in advance.
-                                     * Otherwise, the screen will flickers due to the images loaded early or late.
-                                     * 
-                                     * However, naturalWidth and naturalHeight do not work in IE8 or below
-                                     */
-                                    let poll = setInterval(() => {
-                                        let img = $(element).children()[0];
-                                        if (img.naturalWidth) {
-                                            clearInterval(poll);
-                                            $(element).css({
-                                                'width': minHeight * img.naturalWidth / img.naturalHeight, 
-                                                'flex-grow': img.naturalWidth / img.naturalHeight
-                                            });
-                                        }
-                                    }, settings.checkPeriod);
-                                })
-                .children("img").addClass("flex-gallery-img")
-                                .css("display", "none")
-                                .on('load', (event) => {
-                                    /**
-                                     * Let each image invisible first and then fade in an image when it is loaded completely.
-                                     */
-                                    $(event.target).fadeIn(settings.fadeInDuration);
-                                });
+                .children("a")   .addClass("flex-gallery-a")
+                                 .css('margin', settings.margin)
+                                 .each((index, element) => {
+                                     /**
+                                      * Checks sizes of every images being loading
+                                      * so that we are able to set up the sizes of <a>s in advance.
+                                      * Otherwise, the screen will flickers due to the images loaded early or late.
+                                      *
+                                      * However, naturalWidth and naturalHeight do not work in IE8 or below
+                                      */
+                                     let poll = setInterval(() => {
+                                         let img = $(element).children("div").children("img")[0];
+                                         if (img.naturalWidth) {
+                                             clearInterval(poll);
+                                             $(element).css({
+                                                 'width': minHeight * img.naturalWidth / img.naturalHeight,
+                                                 'flex-grow': img.naturalWidth / img.naturalHeight
+                                             });
+                                         }
+                                     }, settings.checkPeriod);
+                                 })
+                .children("div") .addClass("flex-gallery-div")
+                .children("img") .addClass("flex-gallery-img")
+                                 .css("display", "none")
+                                 .on('load', function(event) {
+                                     /**
+                                      * Make each image invisible first and then fade in an image
+                                      * when it is loaded completely.
+                                      */
+                                     $(event.target).fadeIn(
+                                        settings.fadeInDuration,
+                                        /**
+                                         * After an image is loaded, the initial animation and
+                                         * event listeners are then applied to itself.
+                                         */
+                                        function() {
+                                            $(this).parents("a").each(
+                                                 /**
+                                                  * The first animation of each image behaves weirdly unless
+                                                  * we do a invisible initial animation at the beginning.
+                                                  */
+                                                 function(index) { hideText(this); }
+                                             ).hover(
+                                                 function() { showText(this); },
+                                                 function() { hideText(this); }
+                                             )
+                                        });
+                                 })
+                .siblings("span").addClass('flex-gallery-text')
+                                 .css('opacity', 0);
         });
     };
     /**
-     * Sets up the needed methods for an flex-gallery-image.
+     * Sets up the needed methods for an flex-gallery-img.
      * @param {Object} media - an object of images and links
      * @param {Boolean} shuffling - whether to shuffle the image list or not
      * @return {jQuery}
@@ -104,11 +125,15 @@ var autoAdjusted = false;
         if(media.links && media.images.length != media.links.length)
             throw "Error: # of images and # of links are not the same.";
         /**
-         * Clones the image array.
+         * Clone the image array.
          */
-        let images = links = media.images.slice();
+        let images = links = media.images.slice(), texts;
         if(media.links)
             links = media.links.slice();
+        if(media.texts)
+            texts = media.texts.slice();
+        else
+            texts = Array(images.length).fill("");
         /**
          * Add images to the page.
          */
@@ -126,7 +151,11 @@ var autoAdjusted = false;
                  */
                 $("#container").append(
                     $("<a>").attr("href", links[index]).append(
-                        $("<img>").attr("src", images[index]) //** this image should be a thumbnail
+                        $("<div>").append(
+                            $("<img>").attr("src", images[index]) //** this image should be a thumbnail
+                        ).append(
+                            $('<span>').text(texts[index])
+                        )
                     )
                 );
             });
@@ -156,6 +185,90 @@ function randPerm(length) {
     let array = Array.from({length: length}, (v, k) => k);
     shuffle(array)
     return array
+}
+
+/**
+ * Show the text in the flex image.
+ * @param {Object} elem - an flex image element
+ */
+function showText(elem) {
+    /**
+     * Make the div behind the image black.
+     */
+    $(elem).find('.flex-gallery-div').each(function(index) {
+        dynamics.css(this, {
+            background: 'black'
+        });
+    });
+    /**
+     * Darken the image.
+     */
+    $(elem).find('.flex-gallery-img').each(function(index) {
+        dynamics.animate(this, {
+            opacity: 0.5
+        }, {
+            type: dynamics.easeOut,
+            friction: 140,
+            duration: 400
+        });
+    })
+    /**
+     * Bring the text out.
+     */
+    $(elem).find('.flex-gallery-text').each(function(index) {
+        dynamics.animate(this, {
+            opacity: 1,
+            scale: 1
+        }, {
+            type: dynamics.spring,
+            frequency: 200,
+            friction: 380,
+            duration: 800
+        });
+    });
+}
+
+/**
+ * Hide the text in the flex image.
+ * @param {Object} elem - an flex image element
+ */
+function hideText(elem) {
+    /**
+     * Bounce back the image.
+     */
+    $(elem).find('.flex-gallery-img').each(function(index) {
+        dynamics.animate(this, {
+            opacity: 1
+        }, {
+            type: dynamics.easeOut,
+            friction: 140,
+            duration: 400,
+            /**
+             * Make the background white after the image is not transparent.
+             */
+            complete: function() {
+                $(elem).find('.flex-gallery-div').each(function(index) {
+                    dynamics.css(this, {
+                        background: 'white'
+                    });
+                });
+            }
+        });
+    })
+    /**
+     * Conceal the text.
+     */
+    $(elem).find('.flex-gallery-text').each(function(index) {
+        dynamics.animate(this, {
+            opacity: 0,
+            scale: 0.1
+        }, {
+            type: dynamics.spring,
+            frequency: 200,
+            friction: 380,
+            duration: 800
+        });
+    });
 }
 
 /**

@@ -3,6 +3,12 @@
      * Keeps it clean.
      */
 }
+.flex-gallery-div {
+    /**
+     * So that the text inside can be positioned absolutely.
+     */
+    position: relative;
+}
 .flex-gallery-img {
     /**
      * Makes images undraggable.
@@ -42,4 +48,20 @@
      * Well... If the left space is less than (screenHeight / 4), make them grow!
      */
     min-width: calc(100vw / 4);
+}
+.flex-gallery-text {
+    /**
+     * Locate the text along with the image.
+     */
+    position: absolute;
+    left: 1em;
+    bottom: 1em;
+    /**
+     * Bring the text to the front.
+     */
+    z-index: 2;
+    /**
+     * White texts look good.
+     */
+    color: white;
 }
