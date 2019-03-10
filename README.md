@@ -61,11 +61,12 @@ Simply set images in a container by `addFlexImages()` and call `flexGallery()` t
 $('#container').addFlexImages(media).flexGallery();
 ```
 
-*media* looks like this. It is an object containing images you want to display and corresponding links.
+*media* looks like this. It is an object containing images you want to display and corresponding links. Only *images* is required.
 ```javascript
 media = {
     images: ['img/image1_t.jpg', 'img/image2_t.jpg', 'img/image3_t.jpg'],
-    links: ['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg']
+    links: ['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg'],
+    texts: ['description 1', 'description 2', 'description 3']
 }
 ```
 
@@ -79,18 +80,24 @@ $('#container').addFlexImages(media, shuffling=true).flexGallery();
 You can also construct the container by yourself.
 A container is supposed to be structured as shown below.
 ```html
-<div id="container">
-    <a href="img/image1.jpg">
-        <img src="img/image1_t.jpg">
-        <span>description 1</span>
-    </a>
-    <a href="img/image2.jpg">
-        <img src="img/image2_t.jpg">
-        <span>description 2</span>
-    </a>
+<div class="fg-container">
+    <div class="fg-item">
+        <a href="img/image1.jpg">
+            <img class="fg-img" src="img/image1_t.jpg">
+        </a>
+        <span class="fg-text">description 1</span>
+    </div>
+    <div class="fg-item">
+        <a href="img/image2.jpg">
+            <img class="fg-img" src="img/image2_t.jpg">
+        </a>
+        <span class="fg-text">description 2</span>
+    </div>
     <!-- more images -->
 </div>
 ```
+Note that `fg-container`, `fg-item`, `fg-img`, and `fg-text` are essential class names for flex gallery. 
+`flexGallery()` applies a series of operations on those elements.
 
 Don't forget calling `flexGallery()` to make the container *flex* at the end.
 ```javascript

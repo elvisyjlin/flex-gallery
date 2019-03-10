@@ -1,15 +1,10 @@
-.flex-gallery-a {
-    /**
-     * Keeps it clean.
-     */
-}
-.flex-gallery-div {
+.fg-item {
     /**
      * So that the text inside can be positioned absolutely.
      */
     position: relative;
 }
-.flex-gallery-img {
+.fg-img {
     /**
      * Makes images undraggable.
      */
@@ -27,14 +22,14 @@
      */
     vertical-align: middle;
 }
-.flex-gallery-container {
+.fg-container {
     /**
      * Flex display is the key point to make images grow.
      */
     display: flex;
     flex-wrap: wrap;
 }
-.flex-gallery-container::after {
+.fg-container::after {
     /**
      * Creates a blank element after the last image.
      */
@@ -49,7 +44,7 @@
      */
     min-width: calc(100vw / 4);
 }
-.flex-gallery-text {
+.fg-text {
     /**
      * Locate the text along with the image.
      */

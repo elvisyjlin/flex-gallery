@@ -41,73 +41,70 @@ var autoAdjusted = false;
          * Listen on window size change.
          */
         if(!autoAdjusted && settings.autoAdjust) {
-                $(window).on('resize', () => {
-                    if(settings.minHeightRatioWindow)
-                        minHeightWindow = window.innerHeight * settings.minHeightRatioWindow;
-                    minHeight = Math.min(minHeightWindow, minHeightScreen);
-                    $('.flex-gallery-a').each((index, element) => {
-                        let img = $(element).children()[0];
-                        $(element).css('width', minHeight * img.naturalWidth / img.naturalHeight);
-                    });
+            $(window).on('resize', () => {
+                if(settings.minHeightRatioWindow)
+                    minHeightWindow = window.innerHeight * settings.minHeightRatioWindow;
+                minHeight = Math.min(minHeightWindow, minHeightScreen);
+                $('.flex-gallery-a').each((index, element) => {
+                    let img = $(element).children()[0];
+                    $(element).css('width', minHeight * img.naturalWidth / img.naturalHeight);
                 });
-                autoAdjusted = true;
+            });
+            autoAdjusted = true;
         }
         /**
          * Make all elements flex.
          */
-        return this.each(() => {
-            this.addClass("flex-gallery-container")
+        return this.find("*").addBack().filter(".fg-container").each((index, fgContainer) => {
+            $(fgContainer).css('margin', settings.margin);
+            $(fgContainer).find(".fg-item")
                 .css('margin', settings.margin)
-                .children("a")   .addClass("flex-gallery-a")
-                                 .css('margin', settings.margin)
-                                 .each((index, element) => {
-                                     /**
-                                      * Checks sizes of every images being loading
-                                      * so that we are able to set up the sizes of <a>s in advance.
-                                      * Otherwise, the screen will flickers due to the images loaded early or late.
-                                      *
-                                      * However, naturalWidth and naturalHeight do not work in IE8 or below
-                                      */
-                                     let poll = setInterval(() => {
-                                         let img = $(element).children("div").children("img")[0];
-                                         if (img.naturalWidth) {
-                                             clearInterval(poll);
-                                             $(element).css({
-                                                 'width': minHeight * img.naturalWidth / img.naturalHeight,
-                                                 'flex-grow': img.naturalWidth / img.naturalHeight
-                                             });
-                                         }
-                                     }, settings.checkPeriod);
-                                 })
-                .children("div") .addClass("flex-gallery-div")
-                .children("img") .addClass("flex-gallery-img")
-                                 .css("display", "none")
-                                 .on('load', function(event) {
-                                     /**
-                                      * Make each image invisible first and then fade in an image
-                                      * when it is loaded completely.
-                                      */
-                                     $(event.target).fadeIn(
-                                        settings.fadeInDuration,
-                                        /**
-                                         * After an image is loaded, the initial animation and
-                                         * event listeners are then applied to itself.
-                                         */
-                                        function() {
-                                            $(this).parents("a").each(
-                                                 /**
-                                                  * The first animation of each image behaves weirdly unless
-                                                  * we do a invisible initial animation at the beginning.
-                                                  */
-                                                 function(index) { hideText(this); }
-                                             ).hover(
-                                                 function() { showText(this); },
-                                                 function() { hideText(this); }
-                                             )
-                                        });
-                                 })
-                .siblings("span").addClass('flex-gallery-text')
-                                 .css('opacity', 0);
+                .each((index, fgItem) => {
+                   /**
+                    * Checks sizes of every images being loading
+                    * so that we are able to set up the sizes of <a>s in advance.
+                    * Otherwise, the screen will flickers due to the images loaded early or late.
+                    *
+                    * However, naturalWidth and naturalHeight do not work in IE8 or below
+                    */
+                    $(fgItem).find(".fg-img")
+                        .css("display", "none")
+                        .each((index, fgimg) => {
+                            let poll = setInterval(() => {
+                                let img = $(fgimg).get(0);
+                                if (img.naturalWidth) {
+                                    clearInterval(poll);
+                                    $(fgItem).css({
+                                        'width': minHeight * img.naturalWidth / img.naturalHeight,
+                                        'flex-grow': img.naturalWidth / img.naturalHeight
+                                    });
+                                }
+                            }, settings.checkPeriod);
+                        })
+                        .on('load', (e) => {
+                            /**
+                             * Make each image invisible first and then fade in an image
+                             * when it is loaded completely.
+                             */
+                            $(e.target).fadeIn(
+                                settings.fadeInDuration,
+                                /**
+                                 * After an image is loaded, the initial animation and
+                                 * event listeners are then applied to itself.
+                                 */
+                                () => $(fgItem).each(
+                                    () => hideText(fgItem)
+                                ).hover(
+                                    () => showText(fgItem), () => hideText(fgItem)
+                                )
+                            );
+                        });
+                    /**
+                     * Hide the descriptions initially.
+                     */
+                    $(fgItem).find(".fg-text")
+                        .css('opacity', 0);
+                });
         });
     };
     /**
@@ -149,13 +146,15 @@ var autoAdjusted = false;
                 /**
                  * Creates and inserts <a> with <img> in the container.
                  */
-                $("#container").append(
-                    $("<a>").attr("href", links[index]).append(
-                        $("<div>").append(
-                            $("<img>").attr("src", images[index]) //** this image should be a thumbnail
-                        ).append(
-                            $('<span>').text(texts[index])
+                $("#container").addClass("fg-container").append(
+                    $("<div>").addClass("fg-item").append(
+                        $("<a>").attr("href", links[index]).append(
+                            $("<img>").addClass("fg-img")
+                                      .attr("src", images[index])  //** this image is a thumbnail
                         )
+                    ).append(
+                        $("<span>").addClass("fg-text")
+                                   .text(texts[index])
                     )
                 );
             });
@@ -191,20 +190,20 @@ function randPerm(length) {
  * Show the text in the flex image.
  * @param {Object} elem - an flex image element
  */
-function showText(elem) {
+function showText(fgItem) {
     /**
      * Make the div behind the image black.
      */
-    $(elem).find('.flex-gallery-div').each(function(index) {
-        dynamics.css(this, {
+    $(fgItem).each((index, element) => {
+        dynamics.css(element, {
             background: 'black'
         });
     });
     /**
      * Darken the image.
      */
-    $(elem).find('.flex-gallery-img').each(function(index) {
-        dynamics.animate(this, {
+    $(fgItem).find('.fg-img').each((index, element) => {
+        dynamics.animate(element, {
             opacity: 0.5
         }, {
             type: dynamics.easeOut,
@@ -215,8 +214,8 @@ function showText(elem) {
     /**
      * Bring the text out.
      */
-    $(elem).find('.flex-gallery-text').each(function(index) {
-        dynamics.animate(this, {
+    $(fgItem).find('.fg-text').each((index, element) => {
+        dynamics.animate(element, {
             opacity: 1,
             scale: 1
         }, {
@@ -232,12 +231,12 @@ function showText(elem) {
  * Hide the text in the flex image.
  * @param {Object} elem - an flex image element
  */
-function hideText(elem) {
+function hideText(fgItem) {
     /**
      * Bounce back the image.
      */
-    $(elem).find('.flex-gallery-img').each(function(index) {
-        dynamics.animate(this, {
+    $(fgItem).find('.fg-img').each((index, element) => {
+        dynamics.animate(element, {
             opacity: 1
         }, {
             type: dynamics.easeOut,
@@ -247,8 +246,8 @@ function hideText(elem) {
              * Make the background white after the image is not transparent.
              */
             complete: function() {
-                $(elem).find('.flex-gallery-div').each(function(index) {
-                    dynamics.css(this, {
+                $(fgItem).each((index, element) => {
+                    dynamics.css(element, {
                         background: 'white'
                     });
                 });
@@ -258,8 +257,8 @@ function hideText(elem) {
     /**
      * Conceal the text.
      */
-    $(elem).find('.flex-gallery-text').each(function(index) {
-        dynamics.animate(this, {
+    $(fgItem).find('.fg-text').each((index, element) => {
+        dynamics.animate(element, {
             opacity: 0,
             scale: 0.1
         }, {
@@ -269,6 +268,34 @@ function hideText(elem) {
             duration: 800
         });
     });
+}
+
+/**
+ *
+ */
+function parseUnit(unit, parentValue) {
+    // 16px == 12pt == 1em == 1rem (== 100%)
+    unit = unit.trim();
+    let multiplier = 1;
+    if(isNumber(unit)) {
+        multiplier = parentValue;
+    } else if(unit.endsWith('px')) {
+        multiplier = 1;
+        unit = unit.replace('px', '');
+    } else if(unit.endsWith('pt')) {
+        multiplier = 4.0 / 3.0;
+        unit = unit.replace('pt', '');
+    } else if(unit.endsWith('em')) {
+        multiplier = 16;
+        unit = unit.replace('em', '');
+    } else if(unit.endsWith('rem')) {
+        multiplier = 16;
+        unit = unit.replace('rem', '');
+    } else if(unit.endsWith('%', '')) {
+        multiplier = parentValue / 100.0;
+        unit = unit.replace('%', '')
+    }
+    return Number(unit) * multiplier;
 }
 
 /**
