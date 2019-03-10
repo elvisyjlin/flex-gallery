@@ -1,34 +1,11 @@
-.flex-gallery-a {
-    /**
-     * Keeps it clean.
-     */
-}
-.flex-gallery-img {
-    /**
-     * Makes images undraggable.
-     */
-    user-select: none;
-    /**
-     * Lets widths of images fit their parents (<a>s)
-     */
-    width: 100%;
-    /**
-     * Eliminates paddings images below images.
-     */
-    display: block;
-    /**
-     * Equivalent to "display: block;"
-     */
-    /*vertical-align: bottom;*/
-}
-.flex-gallery-container {
+.fg-container {
     /**
      * Flex display is the key point to make images grow.
      */
     display: flex;
     flex-wrap: wrap;
 }
-.flex-gallery-container::after {
+.fg-container::after {
     /**
      * Creates a blank element after the last image.
      */
@@ -42,4 +19,44 @@
      * Well... If the left space is less than (screenHeight / 4), make them grow!
      */
     min-width: calc(100vw / 4);
+}
+.fg-item {
+    /**
+     * So that the text inside can be positioned absolutely.
+     */
+    position: relative;
+}
+.fg-img {
+    /**
+     * Makes images undraggable.
+     */
+    user-select: none;
+    /**
+     * Lets widths of images fit their parents (<a>s)
+     */
+    width: 100%;
+    /**
+     * Eliminates paddings images below images.
+     */
+    /*display: block;*/
+    /**
+     * Equivalent to "display: block;"
+     */
+    vertical-align: middle;
+}
+.fg-text {
+    /**
+     * Locate the text along with the image.
+     */
+    position: absolute;
+    left: 1em;
+    bottom: 1em;
+    /**
+     * Bring the text to the front.
+     */
+    z-index: 2;
+    /**
+     * White texts look good.
+     */
+    color: white;
 }

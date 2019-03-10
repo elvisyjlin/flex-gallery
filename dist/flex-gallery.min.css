@@ -1,1 +1,1 @@
-.flex-gallery-img{user-select:none;width:100%;display:block}.flex-gallery-container{display:flex;flex-wrap:wrap}.flex-gallery-container::after{content:'';flex-grow:99999;min-width:calc(100vw / 4)}
+.fg-container{display:flex;flex-wrap:wrap}.fg-container::after{content:'';flex-grow:99999;min-width:calc(100vw / 4)}.fg-item{position:relative}.fg-img{user-select:none;width:100%;vertical-align:middle}.fg-text{position:absolute;left:1em;bottom:1em;z-index:2;color:#fff}

@@ -1,3 +1,25 @@
+.fg-container {
+    /**
+     * Flex display is the key point to make images grow.
+     */
+    display: flex;
+    flex-wrap: wrap;
+}
+.fg-container::after {
+    /**
+     * Creates a blank element after the last image.
+     */
+    content: '';
+    /**
+     * Prevents the images in the last row to grow.
+     * In case they become too large.
+     */
+    flex-grow: 99999;
+    /**
+     * Well... If the left space is less than (screenHeight / 4), make them grow!
+     */
+    min-width: calc(100vw / 4);
+}
 .fg-item {
     /**
      * So that the text inside can be positioned absolutely.
@@ -21,28 +43,6 @@
      * Equivalent to "display: block;"
      */
     vertical-align: middle;
-}
-.fg-container {
-    /**
-     * Flex display is the key point to make images grow.
-     */
-    display: flex;
-    flex-wrap: wrap;
-}
-.fg-container::after {
-    /**
-     * Creates a blank element after the last image.
-     */
-    content: '';
-    /**
-     * Prevents the images in the last row to grow.
-     * In case they become too large.
-     */
-    flex-grow: 99999;
-    /**
-     * Well... If the left space is less than (screenHeight / 4), make them grow!
-     */
-    min-width: calc(100vw / 4);
 }
 .fg-text {
     /**
