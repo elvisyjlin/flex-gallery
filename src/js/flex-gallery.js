@@ -69,18 +69,6 @@ var autoAdjusted = false;
                     */
                     $(fgItem).find(".fg-img")
                         .css("display", "none")
-                        .each((index, fgimg) => {
-                            let poll = setInterval(() => {
-                                let img = $(fgimg).get(0);
-                                if (img.naturalWidth) {
-                                    clearInterval(poll);
-                                    $(fgItem).css({
-                                        'width': minHeight * img.naturalWidth / img.naturalHeight,
-                                        'flex-grow': img.naturalWidth / img.naturalHeight
-                                    });
-                                }
-                            }, settings.checkPeriod);
-                        })
                         .on('load', (e) => {
                             /**
                              * Make each image invisible first and then fade in an image
@@ -98,6 +86,19 @@ var autoAdjusted = false;
                                     () => showText(fgItem), () => hideText(fgItem)
                                 )
                             );
+                        })
+                        .each((index, fgImg) => {
+                            let poll = setInterval(() => {
+                                let img = $(fgImg).get(0);
+                                if (img.naturalWidth) {
+                                    clearInterval(poll);
+                                    $(fgItem).css({
+                                        'width': minHeight * img.naturalWidth / img.naturalHeight,
+                                        'flex-grow': img.naturalWidth / img.naturalHeight
+                                    });
+                                }
+                            }, settings.checkPeriod);
+                            $(fgImg).attr("src", $(fgImg).attr("fg-img-src"));
                         });
                     /**
                      * Hide the descriptions initially.
@@ -150,7 +151,7 @@ var autoAdjusted = false;
                     $("<div>").addClass("fg-item").append(
                         $("<a>").attr("href", links[index]).append(
                             $("<img>").addClass("fg-img")
-                                      .attr("src", images[index])  //** this image is a thumbnail
+                                      .attr("fg-img-src", images[index])  //** this image is a thumbnail
                         )
                     ).append(
                         $("<span>").addClass("fg-text")

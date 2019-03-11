@@ -83,13 +83,13 @@ A container is supposed to be structured as shown below.
 <div class="fg-container">
     <div class="fg-item">
         <a href="img/image1.jpg">
-            <img class="fg-img" src="img/image1_t.jpg">
+            <img class="fg-img" fg-img-src="img/image1_t.jpg">
         </a>
         <span class="fg-text">description 1</span>
     </div>
     <div class="fg-item">
         <a href="img/image2.jpg">
-            <img class="fg-img" src="img/image2_t.jpg">
+            <img class="fg-img" fg-img-src="img/image2_t.jpg">
         </a>
         <span class="fg-text">description 2</span>
     </div>
