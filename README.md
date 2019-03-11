@@ -131,6 +131,15 @@ If both of them are specified, the smaller computed height will be applied to th
 Note that `margin` can be either absolute (`px`, `em`) or relative (`vw`, `vh`, `vmin`) unit, 
 while percentage (`%`) padding or margin in flex element is not supported by some browsers (e.g. Firebox, Edge, ...).
 
+#### To Build
+
+```bash
+cd src/tool
+./build.sh
+```
+
+The files under `dist/` will then get updated and also minimized.
+
 
 ## How it works?
 
