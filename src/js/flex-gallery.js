@@ -136,10 +136,18 @@ var autoAdjusted = false;
          * Add images to the page.
          */
         return this.each(() => {
-            /**
-             * Get a randomly permutated indices.
-             */
-            let indices = randPerm(media.images.length);
+            let indices;
+            if(shuffling) {
+                /**
+                 * Get a randomly permutated indices.
+                 */
+                indices = randPerm(media.images.length);
+            } else {
+                /**
+                 * Get ordered indices.
+                 */
+                indices = orderedPerm(media.images.length);
+            }
             /**
              * Puts images into the #container.
              */
@@ -177,12 +185,23 @@ function shuffle(array) {
 }
 
 /**
+ * Generate a list of [0, 1, ..., length-1]
+ * @param {Number} length - the number of indices
+ * @return {Array} an ordered index array
+ */
+function orderedPerm(length) {
+    // let array = Array.from({length: length}, (v, k) => k);
+    let array = [...Array(length).keys()];
+    return array
+}
+
+/**
  * Randomly permutate a list of indices.
  * @param {Number} length - the number of indices
  * @return {Array} an randomly permutated array
  */
 function randPerm(length) {
-    let array = Array.from({length: length}, (v, k) => k);
+    let array = orderedPerm(length);
     shuffle(array)
     return array
 }
